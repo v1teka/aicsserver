@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -13,11 +14,11 @@ class CreateClassroomsTable extends Migration
     public function up()
     {
         Schema::create('classrooms', function (Blueprint $table) {
-            $table->increments('id')->primary();
-            $table->string('title');
-            $table->integer('x');
-            $table->integer('y');
-            $table->string('walls');
+            $table->increments('id');
+            $table->string('title', 50)->unique();
+            $table->integer('x')->nullable();
+            $table->integer('y')->nullable();
+            $table->string('walls')->nullable();
             $table->timestamps();
         });
     }

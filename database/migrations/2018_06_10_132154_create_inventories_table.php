@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -13,10 +14,10 @@ class CreateInventoriesTable extends Migration
     public function up()
     {
         Schema::create('inventories', function (Blueprint $table) {
-            $table->increments('id')->primary();
-            $table->integer('number')->unsigned()->nullable();
-            $table->SmallInteger('type_id')->unsigned()->nullable();
-            $table->SmallInteger('classroom_id')->unsigned()->nullable();
+            $table->increments('id');
+            $table->unsignedInteger('number')->nullable()->unique();
+            $table->unsignedInteger('type_id')->nullable();
+            $table->unsignedInteger('classroom_id')->nullable();
             $table->integer('x')->nullable();
             $table->integer('y')->nullable();
             $table->timestamps();

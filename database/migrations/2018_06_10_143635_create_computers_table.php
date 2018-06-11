@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -13,10 +14,10 @@ class CreateComputersTable extends Migration
     public function up()
     {
         Schema::create('computers', function (Blueprint $table) {
-            $table->integer('inv_id')->unsigned();
-            $table->macAddress('mac');
-            $table->ipAddress('ip');
-            $table->tinyInteger('state');
+            $table->unsignedInteger('inv_id')->primary();
+            $table->macAddress('mac')->nullable();
+            $table->ipAddress('ip')->nullable();
+            $table->boolean('state')->default(false);
             $table->timestamps();
 
 

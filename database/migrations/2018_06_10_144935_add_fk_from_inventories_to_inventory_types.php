@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkFromComputersToInvetoriesId extends Migration
+class AddFkFromInventoriesToInventoryTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddFkFromComputersToInvetoriesId extends Migration
      */
     public function up()
     {
-        Schema::table('computers', function (Blueprint $table){
-            $table->foreign('inv_id')
-                ->references('number')
-                ->on('inventories');
+        Schema::table('inventories', function (Blueprint $table){
+            $table->foreign('type_id')->references('id')->on('inventory_types');
         });
     }
 
@@ -27,8 +25,8 @@ class AddFkFromComputersToInvetoriesId extends Migration
      */
     public function down()
     {
-        Schema::table('computers', function (Blueprint $table){
-            $table->dropForeign('computers_inv_id_foreign');
+        Schema::table('inventories', function (Blueprint $table){
+            $table->dropForeign('inventories_type_id_foreign');
         });
     }
 }

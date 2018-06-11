@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFkFromClassroomsToClassroomId extends Migration
+class AddFkFromInventoriesToClassroomsId extends Migration
 {
     /**
      * Run the migrations.
@@ -25,7 +25,7 @@ class AddFkFromClassroomsToClassroomId extends Migration
      */
     public function down()
     {
-        Schema::table('inventory_classrooms', function (Blueprint $table){
+        Schema::table('inventories', function (Blueprint $table){
             $table->dropForeign('inventories_classroom_id_foreign');
         });
     }

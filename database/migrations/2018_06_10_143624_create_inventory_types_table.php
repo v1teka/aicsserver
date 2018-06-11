@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -13,10 +14,10 @@ class CreateInventoryTypesTable extends Migration
     public function up()
     {
         Schema::create('inventory_types', function (Blueprint $table) {
-            $table->increments('id')->primary();
-            $table->string('title');
-            $table->integer( 'width');
-            $table->integer( 'height');
+            $table->increments('id');
+            $table->string('title', 50)->unique();
+            $table->integer( 'width')->nullable();
+            $table->integer( 'height')->nullable();
             $table->timestamps();
         });
     }
