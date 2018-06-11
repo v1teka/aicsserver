@@ -18,7 +18,8 @@
             
             function drawRoom(num) {
                 var audience = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                audience.setAttributeNS(null, "d", "M100 100 L400 100 L400 660 L220 660 L220 600 L100 600 z"); //взять path из базы
+                
+                audience.setAttributeNS(null, "d", "M100 100 L400 100 L400 660 L220 660 L220 600 L100 600 z");
                 audience.setAttributeNS(null, "stroke-width", 2);
                 audience.setAttributeNS(null, "stroke", "black");
                 audience.setAttributeNS(null, "fill", "lightgray");
@@ -27,7 +28,7 @@
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
-                    url: 'getMap.php?number='+num
+                    url: 'getmap?room='+num
                 }).done(function(data) {
                         drawInv(data);
                         $("#shutdownroom").bind("click", function(event){shutDownRoom(); return false;});
