@@ -52,19 +52,26 @@
                     else document.querySelector("#canvas1").appendChild(invObject);
                 });
 
-                $('.pc').each(function(elem, i){
+                $('.pc').each(function(index){
                     var x = parseInt($(this).attr('x'));
                     var y = parseInt($(this).attr('y'));
-                    var monitorScreen = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    drawMonitor(index,x,y);
+                });
+            }
+            
+            function drawMonitor(i,x,y){
+                var monitorScreen = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
                     monitorScreen.setAttributeNS(null, "x", x+3);
-                    monitorScreen.setAttributeNS(null, "y", y+5);
+                    monitorScreen.setAttributeNS(null, "y", y+3);
                     monitorScreen.setAttributeNS(null, "width", 34);
-                    monitorScreen.setAttributeNS(null, "height", 20);
+                    monitorScreen.setAttributeNS(null, "height", 21);
+                    monitorScreen.setAttributeNS(null, "class", "screen");
+                    monitorScreen.setAttributeNS(null, "id", "screen"+i);
                     monitorScreen.setAttributeNS(null, "fill", "paleturquoise");
                     document.querySelector("#canvas2").appendChild(monitorScreen);
 
                     var monitorScreenColor = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-                    monitorScreenColor.setAttributeNS(null, "points", (x + 37) + ',' + (y+2+3) + ' ' + (x + 37) + ',' + (y+2+3+21) + ' ' + (x +3) + ',' + (y+2+3+21));
+                    monitorScreenColor.setAttributeNS(null, "points", (x + 37) + ',' + (y+3) + ' ' + (x + 37) + ',' + (y+3+21) + ' ' + (x +3) + ',' + (y+3+21));
                     monitorScreenColor.setAttributeNS(null, "fill", "turquoise");
                     document.querySelector("#canvas2").appendChild(monitorScreenColor);
 
@@ -84,27 +91,26 @@
 
                     var firstButton = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                     firstButton.setAttributeNS(null, "cx", x+6);
-                    firstButton.setAttributeNS(null, "cy", y+27);
+                    firstButton.setAttributeNS(null, "cy", y+26);
                     firstButton.setAttributeNS(null, "r", 1);
                     firstButton.setAttributeNS(null, "fill", "turquoise");
                     document.querySelector("#canvas2").appendChild(firstButton);
 
                     var secondButton = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                     secondButton.setAttributeNS(null, "cx", x+9);
-                    secondButton.setAttributeNS(null, "cy", y+27);
+                    secondButton.setAttributeNS(null, "cy", y+26);
                     secondButton.setAttributeNS(null, "r", 1);
                     secondButton.setAttributeNS(null, "fill", "silver");
                     document.querySelector("#canvas2").appendChild(secondButton);
 
                     var thirdButton = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                     thirdButton.setAttributeNS(null, "cx", x+12);
-                    thirdButton.setAttributeNS(null, "cy", y+27);
+                    thirdButton.setAttributeNS(null, "cy", y+26);
                     thirdButton.setAttributeNS(null, "r", 1);
                     thirdButton.setAttributeNS(null, "fill", "silver");
                     document.querySelector("#canvas2").appendChild(thirdButton);
-                });
             }
-            
+
             function createInventory(type, x, y){
                 var newObject = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
                 var width=0;
