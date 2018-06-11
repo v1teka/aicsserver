@@ -1,3 +1,8 @@
+<p>XYZ</p>
+<p>AICSrullezzzzzzzzzzzzzzzzzzzz</p>
+<p>ЗДЕСЬ БЫЛИ(КОМАНДА РАЗРАБОТЧИКОВ) ВИТЯ, ВИТАЛЯ, ДАША, НИКИТА</p>
+<p>Когда-то были с нами И.И.Савенко, В.В.Степаненко, К.И.Киселев</p>
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
