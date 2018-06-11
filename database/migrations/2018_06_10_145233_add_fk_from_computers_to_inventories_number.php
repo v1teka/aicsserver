@@ -14,7 +14,7 @@ class AddFkFromComputersToInventoriesNumber extends Migration
     public function up()
     {
         Schema::table('computers', function (Blueprint $table){
-            $table->foreign('inv_id')->references('number')->on('inventories');
+            $table->foreign('inv_id')->references('id')->on('inventories');
         });
     }
 
