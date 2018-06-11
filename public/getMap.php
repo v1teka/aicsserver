@@ -4,10 +4,10 @@ header('Content-Type: application/json');
 
 if($_GET['number']=="304")
     $data =[
-        "comp1" => ["id" => 0, "ip" =>"192.168.1.58", "type" => 1, "active" => 0, "locationX" => 3, "locationY" => 1, "inventoryNumber" => "101 040 010 390", "name" => "Intel Core 2 Quad Q6700"],
-        "comp2" => ["id" => 1, "ip" =>"192.168.1.53", "type" => 1, "active" => 0, "locationX" => 5, "locationY" => 1, "inventoryNumber" => "101 040 010 391", "name" => "Intel Core 2 Quad Q6700"],
+        "comp1" => ["id" => 0, "ip" =>"192.168.1.58", "type" => 1, "active" => 1, "locationX" => 3, "locationY" => 1, "inventoryNumber" => "101 040 010 390", "name" => "Intel Core 2 Quad Q6700"],
+        "comp2" => ["id" => 1, "ip" =>"192.168.1.53", "type" => 1, "active" => 1, "locationX" => 5, "locationY" => 1, "inventoryNumber" => "101 040 010 391", "name" => "Intel Core 2 Quad Q6700"],
         "comp3" => ["id" => 2, "ip" =>"bc-85-56-16-cb-cc", "type" => 1, "active" => 0, "locationX" => 1, "locationY" => 6, "inventoryNumber" => "101 040 010 392", "name" => "Intel Core 2 Quad Q6700"],
-        "comp4" => ["id" => 3, "ip" =>"127.0.0.1", "type" => 1, "active" => 1, "locationX" => 1, "locationY" => 8, "inventoryNumber" => "101 040 010 393", "name" => "Intel Core 2 Quad Q6700"]
+        "comp4" => ["id" => 3, "ip" =>"127.0.0.1", "type" => 1, "active" => 0, "locationX" => 1, "locationY" => 8, "inventoryNumber" => "101 040 010 393", "name" => "Intel Core 2 Quad Q6700"]
     ];
 else
 if($_GET['number']=="116a")
@@ -27,11 +27,11 @@ $data = [
     "comp13" => ["id" => 12, "active" => 1, "locationX" => 5, "locationY" => 3, "inventoryNumber" => "101 040 010 404", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp14" => ["id" => 13, "active" => 1, "locationX" => 4, "locationY" => 5, "inventoryNumber" => "101 040 010 413", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp15" => ["id" => 14, "active" => 1, "locationX" => 5, "locationY" => 5, "inventoryNumber" => "101 040 010 405", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
-    "comp16" => ["id" => 15, "active" => 0, "locationX" => 4, "locationY" => 7, "inventoryNumber" => "101 040 010 406", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
+    "comp16" => ["id" => 15, "active" => 1, "locationX" => 4, "locationY" => 7, "inventoryNumber" => "101 040 010 406", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp17" => ["id" => 16, "active" => 1, "locationX" => 5, "locationY" => 7, "inventoryNumber" => "101 040 010 407", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp18" => ["id" => 17, "active" => 1, "locationX" => 4, "locationY" => 9, "inventoryNumber" => "101 040 010 408", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp19" => ["id" => 18, "active" => 1, "locationX" => 5, "locationY" => 9, "inventoryNumber" => "101 040 010 409", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
-    "comp20" => ["id" => 19, "active" => 0, "locationX" => 4, "locationY" => 11, "inventoryNumber" => "101 040 010 410", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
+    "comp20" => ["id" => 19, "active" => 1, "locationX" => 4, "locationY" => 11, "inventoryNumber" => "101 040 010 410", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp21" => ["id" => 20, "active" => 1, "locationX" => 5, "locationY" => 11, "inventoryNumber" => "101 040 010 411", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp22" => ["id" => 21, "active" => 1, "locationX" => 4, "locationY" => 13, "inventoryNumber" => "101 040 010 412", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],
     "comp23" => ["id" => 22, "active" => 1, "locationX" => 5, "locationY" => 13, "inventoryNumber" => "101 040 010 396", "cpu" => "Intel Core 2 Quad Q6700", "type" => 1],

@@ -44,7 +44,7 @@
                     invObject.setAttributeNS(null, "id", 'object' + i);
                     invObject.setAttributeNS(null, "ip", data[i].ip);
                     
-
+                    if(data[i].active == 1) $(invObject).find(".screen").attr("fill", "paleturquoise");
                     $(invObject).bind("click", function(event){showInfo(this)});
                     if(data[i].type == 1) document.querySelector("#canvas2").appendChild(invObject);
                     else document.querySelector("#canvas1").appendChild(invObject);
@@ -93,7 +93,7 @@
                     monitorScreen.setAttributeNS(null, "y", y+3);
                     monitorScreen.setAttributeNS(null, "width", 34);
                     monitorScreen.setAttributeNS(null, "height", 21);
-                    monitorScreen.setAttributeNS(null, "fill", "paleturquoise");
+                    monitorScreen.setAttributeNS(null, "fill", "black");
                     monitorScreen.setAttributeNS(null, "class", "screen");
                     newPC.appendChild(monitorScreen);
 
@@ -181,14 +181,14 @@
                         $(e).find(".screen").attr("fill", "paleturquoise");
                         return true;
                      }else{
-                        $(e).find(".screen").attr("fill", "lightgrey");
+                        $(e).find(".screen").attr("fill", "black");
                         return false;
                      }
                 });
             }
             
             function checkOnline(){
-                $('rect.pc').each(function(){
+                $('.pc').each(function(){
                     isOnline(this);
                 });
                 setTimeout(checkOnline, 30000);
@@ -222,7 +222,7 @@
             }
             
             function shutDownRoom(){
-                $('rect.pc').each(function(){
+                $('.pc').each(function(){
                     shutdown($(this).attr('ip'));
                 });
             }
