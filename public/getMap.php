@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 if($_GET['number']=="304")
     $data =[
         "comp1" => ["id" => 0, "ip" =>"192.168.1.58", "type" => 1, "active" => 1, "locationX" => 3, "locationY" => 1, "inventoryNumber" => "101 040 010 390", "name" => "Intel Core 2 Quad Q6700"],
-        "comp2" => ["id" => 1, "ip" =>"192.168.1.53", "type" => 1, "active" => 1, "locationX" => 5, "locationY" => 1, "inventoryNumber" => "101 040 010 391", "name" => "Intel Core 2 Quad Q6700"],
+        "comp2" => ["id" => 1, "ip" =>"192.168.1.51", "type" => 1, "active" => 1, "locationX" => 5, "locationY" => 1, "inventoryNumber" => "101 040 010 391", "name" => "Intel Core 2 Quad Q6700"],
         "comp3" => ["id" => 2, "ip" =>"bc-85-56-16-cb-cc", "type" => 1, "active" => 0, "locationX" => 1, "locationY" => 6, "inventoryNumber" => "101 040 010 392", "name" => "Intel Core 2 Quad Q6700"],
         "comp4" => ["id" => 3, "ip" =>"127.0.0.1", "type" => 1, "active" => 0, "locationX" => 1, "locationY" => 8, "inventoryNumber" => "101 040 010 393", "name" => "Intel Core 2 Quad Q6700"]
     ];
