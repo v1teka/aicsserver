@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Http\Requests;
-use App\invObject;
+use App\inventory;
+use app\inventory_type;
+use app\classroom;
+use app\computer;
 
 class InvBaseController extends Controller
 {
@@ -36,6 +39,17 @@ class InvBaseController extends Controller
         else{
             return 'machine has been registered';
         }
+    }
+
+    public function getMap(Request $request) {
+        $map = DB::table('inventories')
+            ->join('computers', 'inventories.id', '=', 'computers.inv_id')
+            ->join('inventory_types', 'inventories.type_id', '=', 'inventory_types.id')
+            ->select('inventories.id'. 'computers.mac', 'inventories.type_id', 'computers.state'
+                , 'inventories.x', 'inventories.y','inventories.number')
+            ->where('classrooms.title', $request['room'])
+            ->get();
+        return $map->toJson();
     }
 
     public function Info(Request $request){

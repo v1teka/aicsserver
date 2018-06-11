@@ -14,6 +14,8 @@ Route::any('/information', function () {
     return view('onebutton');
 });
 
+Route::any('/getMap', 'InvBaseController@getMap');
+
 Route::any('/direct', 'InvBaseController@Info');
 
 Route::any('/mapinfo', 'InvBaseController@Map');
