@@ -47,9 +47,9 @@ class InvBaseController extends Controller
         return $answer;
     }
 
-    public function Map(Request $request){
-    
-        return 1;
+    public function getMap(Request $request)
+    {
+        //обработка запроса карты
     }
 
     public function Draw(Request $request){

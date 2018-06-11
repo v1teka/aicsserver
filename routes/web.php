@@ -16,10 +16,10 @@ Route::any('/information', function () {
 
 Route::any('/direct', 'InvBaseController@Info');
 
-Route::any('/mapinfo', 'InvBaseController@Map');
-
 Route::any('/map', 'InvBaseController@Draw');
 
 Route::any('/online', 'InvBaseController@isOnline');
 
 Route::any('/arp', 'InvBaseController@arpScan');
+
+Route::post('/getmap', 'InvBaseController@getMap');
