@@ -3,6 +3,7 @@
     <head>
         <title>Карта</title>
         <meta charset="utf-8" />
+        <meta name='csrf-token' content='{{ csrf_token() }}' />
         <style>
             #manage{
                 position:fixed;
@@ -19,17 +20,20 @@
             function drawRoom(num) {
                 var audience = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                 
-                audience.setAttributeNS(null, "d", "M100 100 L400 100 L400 660 L220 660 L220 600 L100 600 z");
+                audience.setAttributeNS(null, "d", "{{ DB::table('classrooms')->select('walls')->where('title', $number)->pluck('walls')[0] }}");
                 audience.setAttributeNS(null, "stroke-width", 2);
                 audience.setAttributeNS(null, "stroke", "black");
                 audience.setAttributeNS(null, "fill", "lightgray");
                 document.querySelector("#canvas1").appendChild(audience);
-
                 $.ajax({
                     type: 'POST',
                     dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $("meta[name=\"csrf-token\"]").attr('content')
+                    },
                     url: 'getmap?room='+num
                 }).done(function(data) {
+                        alert(data);
                         drawInv(data);
                         $("#shutdownroom").bind("click", function(event){shutDownRoom(); return false;});
                         checkOnline();
@@ -38,12 +42,12 @@
             
             function drawInv(data){
                 $.each(data, function(i){
-                    var invObject = createInventory(data[i].type, data[i].locationX, data[i].locationY);
+                    var invObject = createInventory(data[i].type_id, data[i].x, data[i].y);
                     
-                    invObject.setAttributeNS(null, "title", data[i].name);
-                    invObject.setAttributeNS(null, "inv", data[i].inventoryNumber);
+                    //invObject.setAttributeNS(null, "title", " комп");
+                    invObject.setAttributeNS(null, "inv", data[i].number);
                     invObject.setAttributeNS(null, "id", 'object' + i);
-                    invObject.setAttributeNS(null, "ip", data[i].ip);
+                    invObject.setAttributeNS(null, "ip", data[i].mac);
                     
                     if(data[i].active == 1) $(invObject).find(".screen").attr("fill", "paleturquoise");
                     $(invObject).bind("click", function(event){showInfo(this)});

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 use App\inventory;
 use app\inventory_type;
 use app\classroom;
@@ -45,7 +46,8 @@ class InvBaseController extends Controller
         $map = DB::table('inventories')
             ->join('computers', 'inventories.id', '=', 'computers.inv_id')
             ->join('inventory_types', 'inventories.type_id', '=', 'inventory_types.id')
-            ->select('inventories.id'. 'computers.mac', 'inventories.type_id', 'computers.state'
+            ->join('classrooms', 'inventories.classroom_id', '=', 'classrooms.id')
+            ->select('inventories.id', 'computers.mac', 'inventories.type_id', 'computers.state'
                 , 'inventories.x', 'inventories.y','inventories.number')
             ->where('classrooms.title', $request['room'])
             ->get();
@@ -59,11 +61,6 @@ class InvBaseController extends Controller
         $answer = stream_get_contents($fp);
         fclose($fp);
         return $answer;
-    }
-
-    public function getMap(Request $request)
-    {
-        //обработка запроса карты
     }
 
     public function Draw(Request $request){
