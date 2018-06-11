@@ -94,11 +94,13 @@
                     monitorScreen.setAttributeNS(null, "width", 34);
                     monitorScreen.setAttributeNS(null, "height", 21);
                     monitorScreen.setAttributeNS(null, "fill", "paleturquoise");
+                    monitorScreen.setAttributeNS(null, "class", "screen");
                     newPC.appendChild(monitorScreen);
 
                     var monitorScreenColor = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
                     monitorScreenColor.setAttributeNS(null, "points", (x + 37) + ',' + (y+3) + ' ' + (x + 37) + ',' + (y+3+21) + ' ' + (x +3) + ',' + (y+3+21));
                     monitorScreenColor.setAttributeNS(null, "fill", "turquoise");
+                    monitorScreenColor.setAttributeNS(null, "opacity", 0.4);
                     newPC.appendChild(monitorScreenColor);
 
                     var lowerStand = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -140,7 +142,7 @@
 
             function showInfo(elem){
                 showPrimaryInfo(elem);
-                
+                isOnline(elem);
                 $("#image").attr("src", "");
                 disableButtons();
                 
@@ -176,10 +178,10 @@
                     url: "arp?ip="+e.getAttribute("ip")
                 }).done(function(data){
                     if(data==1){
-                        $(".screen."+e.getAttribute("class")).attr("fill") = "blue";
+                        $(e).find(".screen").attr("fill", "paleturquoise");
                         return true;
                      }else{
-                        $(".screen."+e.getAttribute("class")).attr("fill") = "white";
+                        $(e).find(".screen").attr("fill", "lightgrey");
                         return false;
                      }
                 });
