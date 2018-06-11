@@ -18,11 +18,11 @@
             
             function drawRoom(num) {
                 var audience = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                audience.setAttributeNS(null, "d", "M50 50 L350 50 L350 750 L100 750 L100 700 L50 700 Z"); //взять path из базы
+                audience.setAttributeNS(null, "d", "M100 100 L400 100 L400 660 L220 660 L220 600 L100 600 z"); //взять path из базы
                 audience.setAttributeNS(null, "stroke-width", 2);
                 audience.setAttributeNS(null, "stroke", "black");
                 audience.setAttributeNS(null, "fill", "lightgray");
-                document.querySelector("svg").appendChild(audience);
+                document.querySelector("#canvas1").appendChild(audience);
 
                 $.ajax({
                     type: 'POST',
@@ -35,8 +35,7 @@
                     });
             }
             
-            function drawInv(data){  
-                var i;
+            function drawInv(data){
                 $.each(data, function(i){
                     var invObject = createInventory(data[i].type, data[i].locationX, data[i].locationY);
                     
@@ -45,60 +44,105 @@
                     invObject.setAttributeNS(null, "id", 'object' + i);
                     invObject.setAttributeNS(null, "ip", data[i].ip);
                     
-                    if(data[i].active==1)   invObject.setAttributeNS(null, "fill", "blue");
-
+                    if(data[i].active == 1) $(invObject).find(".screen").attr("fill", "paleturquoise");
                     $(invObject).bind("click", function(event){showInfo(this)});
-                    document.querySelector("svg").appendChild(invObject);
+                    if(data[i].type == 1) document.querySelector("#canvas2").appendChild(invObject);
+                    else document.querySelector("#canvas1").appendChild(invObject);
                 });
             }
-            
+
             function createInventory(type, x, y){
-                var newObject = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                newObject.setAttributeNS(null, "stroke", "black");
-                newObject.setAttributeNS(null, "fill", "white");
-                var width=0;
-                var height = 0;
-                var typeName = "";
+                var newObject;
                 
                 switch(type){
                     case 1:
-                    width = 30;
-                    height = 30;
-                    typeName = "pc";
-                    newObject.setAttributeNS(null, "stroke", "black");
-                    newObject.setAttributeNS(null, "fill", "darkblue");
-                    newObject.setAttributeNS(null, "z-index", 3);
-                    var monitorShape = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                            monitorShape.setAttributeNS(null, "x", 2);
-                            monitorShape.setAttributeNS(null, "y", 2);
-                            monitorShape.setAttributeNS(null, "width", 40);
-                            monitorShape.setAttributeNS(null, "height", 28);
-                            monitorShape.setAttributeNS(null, "rx", 5);
-                            monitorShape.setAttributeNS(null, "fill", "dimgray");
-                            newObject.appendChild(monitorShape);
+                    newObject = createPC(100 + 60*x - 50,100 + 40*(y-1)+2);
                     break;
 
                     case 2:
-                    width = 60;
-                    height = 40;
-                    typeName = "table";
-                    newObject.setAttributeNS(null, "z-index", 2);
+                    newObject = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    newObject.setAttributeNS(null, "width", 60);
+                    newObject.setAttributeNS(null, "height", 40);
+                    newObject.setAttributeNS(null, "x", 100 + 60*(x-1));
+                    newObject.setAttributeNS(null, "y", 100 + 40*(y-1));
+                    newObject.setAttributeNS(null, "class", "table");
                     newObject.setAttributeNS(null, "stroke", "black");
                     newObject.setAttributeNS(null, "fill-rule", "nonzero");
                     newObject.setAttributeNS(null, "fill", "sandybrown");
                     break;
                 }
-                newObject.setAttributeNS(null, "x", 100 + 60*(x-1));
-                newObject.setAttributeNS(null, "y", 100 + 40*(y-1));
-                newObject.setAttributeNS(null, "width", width);
-                newObject.setAttributeNS(null, "height", height);
-                newObject.setAttributeNS(null, "class", typeName);
+                
                 return newObject;
+            }
+
+            function createPC(x,y){
+                var newPC = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                newPC.setAttributeNS(null, "class", "pc");
+
+                var monitorShape = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                monitorShape.setAttributeNS(null, "x", x);
+                monitorShape.setAttributeNS(null, "y", y);
+                monitorShape.setAttributeNS(null, "width", 40);
+                monitorShape.setAttributeNS(null, "height", 28);
+                monitorShape.setAttributeNS(null, "rx", 5);
+                monitorShape.setAttributeNS(null, "fill", "dimgray");
+                newPC.appendChild(monitorShape);
+
+                var monitorScreen = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    monitorScreen.setAttributeNS(null, "x", x+3);
+                    monitorScreen.setAttributeNS(null, "y", y+3);
+                    monitorScreen.setAttributeNS(null, "width", 34);
+                    monitorScreen.setAttributeNS(null, "height", 21);
+                    monitorScreen.setAttributeNS(null, "fill", "black");
+                    monitorScreen.setAttributeNS(null, "class", "screen");
+                    newPC.appendChild(monitorScreen);
+
+                    var monitorScreenColor = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                    monitorScreenColor.setAttributeNS(null, "points", (x + 37) + ',' + (y+3) + ' ' + (x + 37) + ',' + (y+3+21) + ' ' + (x +3) + ',' + (y+3+21));
+                    monitorScreenColor.setAttributeNS(null, "fill", "turquoise");
+                    monitorScreenColor.setAttributeNS(null, "opacity", 0.4);
+                    newPC.appendChild(monitorScreenColor);
+
+                    var lowerStand = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    lowerStand.setAttributeNS(null, "x", x+12);
+                    lowerStand.setAttributeNS(null, "y", y + 30);
+                    lowerStand.setAttributeNS(null, "width", 16);
+                    lowerStand.setAttributeNS(null, "height", 4);
+                    lowerStand.setAttributeNS(null, "rx", 2);
+                    lowerStand.setAttributeNS(null, "fill", "dimgray");
+                    newPC.appendChild(lowerStand);        
+
+                    var upperStand = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                    upperStand.setAttributeNS(null, "points", (x+16) + ',' + (y+28) + ' ' + (x+24) + ',' + (y+28) + ' ' + (x+26) + ',' + (y+28+2) + ' ' + (x+14) + ',' + (y+2+28));
+                    upperStand.setAttributeNS(null, "fill", "gray");
+                    newPC.appendChild(upperStand);
+
+                    var firstButton = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    firstButton.setAttributeNS(null, "cx", x+6);
+                    firstButton.setAttributeNS(null, "cy", y+26);
+                    firstButton.setAttributeNS(null, "r", 1);
+                    firstButton.setAttributeNS(null, "fill", "turquoise");
+                    newPC.appendChild(firstButton);
+
+                    var secondButton = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    secondButton.setAttributeNS(null, "cx", x+9);
+                    secondButton.setAttributeNS(null, "cy", y+26);
+                    secondButton.setAttributeNS(null, "r", 1);
+                    secondButton.setAttributeNS(null, "fill", "silver");
+                    newPC.appendChild(secondButton);
+
+                    var thirdButton = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    thirdButton.setAttributeNS(null, "cx", x+12);
+                    thirdButton.setAttributeNS(null, "cy", y+26);
+                    thirdButton.setAttributeNS(null, "r", 1);
+                    thirdButton.setAttributeNS(null, "fill", "silver");
+                    newPC.appendChild(thirdButton);
+                return newPC;
             }
 
             function showInfo(elem){
                 showPrimaryInfo(elem);
-                
+                isOnline(elem);
                 $("#image").attr("src", "");
                 disableButtons();
                 
@@ -111,9 +155,9 @@
                 });
             }
             
-            function showPrimaryInfo(elem){
+            function showPrimaryInfo(elem){//исправить проверку онлайна
                 $("#manage p").text(elem.getAttribute("class")+ ' ' + elem.getAttribute("title") + ' (' + elem.getAttribute("inv") + ')');
-                if(elem.getAttribute('fill')=='blue') $("#status").text("Онлайн");
+                if(elem.getAttribute('active')==1) $("#status").text("Онлайн");
                 else  $("#status").text("Оффлайн");
             }
 
@@ -134,17 +178,17 @@
                     url: "arp?ip="+e.getAttribute("ip")
                 }).done(function(data){
                     if(data==1){
-                        e.setAttribute("fill", "blue");
+                        $(e).find(".screen").attr("fill", "paleturquoise");
                         return true;
                      }else{
-                        e.setAttribute("fill", "white");
+                        $(e).find(".screen").attr("fill", "black");
                         return false;
                      }
                 });
             }
             
             function checkOnline(){
-                $('rect.pc').each(function(){
+                $('.pc').each(function(){
                     isOnline(this);
                 });
                 setTimeout(checkOnline, 30000);
@@ -178,7 +222,7 @@
             }
             
             function shutDownRoom(){
-                $('rect.pc').each(function(){
+                $('.pc').each(function(){
                     shutdown($(this).attr('ip'));
                 });
             }
@@ -200,7 +244,8 @@
             <a href="map">выбрать кабинет</a>
             <a id="shutdownroom" href="#">отключить все</a>
         </div>
-        <svg width="1000px" height="1000px" id="canvas" />
+        <svg style="position:absolute;" width="1000px" height="1000px" id="canvas1" />
+        <svg style="position:absolute;" width="1000px" height="1000px" id="canvas2" />
         <div id="manage">
             <p></p>
             <span>Статус:</span><span id="status"></span>
