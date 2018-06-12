@@ -43,15 +43,23 @@ class InvBaseController extends Controller
     }
 
     public function getMap(Request $request) {
-        $map = DB::table('inventories')
+        $computers = DB::table('inventories')
             ->join('computers', 'inventories.id', '=', 'computers.inv_id')
             ->join('inventory_types', 'inventories.type_id', '=', 'inventory_types.id')
             ->join('classrooms', 'inventories.classroom_id', '=', 'classrooms.id')
-            ->select('inventories.id', 'computers.mac', 'inventories.type_id', 'computers.state'
-                , 'inventories.x', 'inventories.y','inventories.number')
+            ->select('inventories.id','inventories.number' , 'inventories.type_id', 'inventories.x'
+                , 'inventories.y' , 'computers.mac', 'computers.state')
             ->where('classrooms.title', $request['room'])
             ->get();
-        return $map->toJson();
+        $invent = DB::table('inventories')
+            ->join('inventory_types', 'inventories.type_id', '=', 'inventory_types.id')
+            ->join('classrooms', 'inventories.classroom_id', '=', 'classrooms.id')
+            ->select('inventories.id','inventories.number' , 'inventories.type_id', 'inventories.x'
+                , 'inventories.y')
+            ->where('classrooms.title', $request['room'])
+            ->where('inventory_types.title', '<>', 'Компьютер')
+            ->get();
+        return $computers->merge($invent)->toJson();
     }
 
     public function Info(Request $request){
@@ -79,7 +87,7 @@ class InvBaseController extends Controller
         }
     }
 
-    private function ipMac(string $scan){
+    private function ipMac($scan){
         preg_match("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})", $scan, $mac);
         preg_match("(\d+\.\d+\.\d+\.\d+)", $scan, $ip);
         DB::table('computers')
