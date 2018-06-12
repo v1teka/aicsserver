@@ -184,9 +184,11 @@
                     url: "arp?address="+e.getAttribute("mac")
                 }).done(function(data){
                     if(data==1){
+                        e.setAttribute("online", "");
                         $(e).find(".screen").attr("fill", "paleturquoise");
                         return true;
                      }else{
+                        e.removeAttribute("online");
                         $(e).find(".screen").attr("fill", "black");
                         return false;
                      }
