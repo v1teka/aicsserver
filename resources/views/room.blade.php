@@ -17,7 +17,7 @@
         <script>
             var currentIP = "";
             
-            function drawRoom(num) {
+            function drawRoom() {
                 var audience = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                 
                 audience.setAttributeNS(null, "d", "{{ DB::table('classrooms')->select('walls')->where('title', $number)->pluck('walls')[0] }}");
@@ -31,7 +31,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $("meta[name=\"csrf-token\"]").attr('content')
                     },
-                    url: 'getmap?room='+num
+                    url: "getmap?room={{ $number }}"
                 }).done(function(data) {
                         drawInv(data);
                         $("#shutdownroom").bind("click", function(event){shutDownRoom(); return false;});
@@ -152,9 +152,9 @@
                 disableButtons();
                 
                 $.ajax({
-                    url: "direct?ip="+elem.getAttribute("ip")+"&t=1"
+                    url: "direct?address="+elem.getAttribute("address")+"&t=1"
                 }).done(function(data) {
-                    currentIP = elem.getAttribute("ip");
+                    currentIP = elem.getAttribute("address");
                     enableButtons();
                     $("#info").text(data);
                 });
@@ -202,47 +202,43 @@
                 setTimeout(checkOnline, 30000);
             }
 
-            function getinfo(ip){
+            function getinfo(add){
                 $.ajax({
-                    url: "direct?ip="+ip+"&t=1"
+                    url: "direct?address="+add+"&t=1"
                 }).done(function(data) {
-                    /*var asd = data.split('|');
-                    asd.forEach(function callback(cur,ind,arr){
-                        alert(cur);
-                    });*/
                     $("#info").text(data);
                 });
             }
 
-            function getscreen(ip){
+            function getscreen(add){
                 $.ajax({
-                    url: "direct?ip="+ip+"&t=2"
+                    url: "direct?address="+add+"&t=2"
                 }).done(function(data) {
                     document.getElementById("image").setAttribute( 'src',  "data:image/png;base64," + data);
                 });
             }
 
-            function shutdown(ip){
-                console.log(ip);
+            function shutdown(add){
+                console.log(add);
                 $.ajax({
-                    url: "direct?ip="+ip+"&t=3"
+                    url: "direct?address="+add+"&t=3"
                 });
             }
             
             function shutDownRoom(){
                 $('.pc').each(function(){
-                    shutdown($(this).attr('ip'));
+                    shutdown($(this).attr('address'));
                 });
             }
 
-            function message(ip){
+            function message(add){
                 $.ajax({
-                    url: "direct?ip="+ip+"&t=4&message="+$("#messageinput").val()
+                    url: "direct?address="+add+"&t=4&message="+$("#messageinput").val()
                 });
             }
 
             $(document).ready(function(){
-                drawRoom("{{ $number }}");
+                drawRoom();
             });
         </script>
     </head>
