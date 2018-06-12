@@ -46,7 +46,7 @@
                     //invObject.setAttributeNS(null, "title", " комп");
                     invObject.setAttributeNS(null, "inv", data[i].number);
                     invObject.setAttributeNS(null, "id", 'object' + i);
-                    invObject.setAttributeNS(null, "mac", data[i].mac);
+                    invObject.setAttributeNS(null, "address", data[i].mac);
                     if( data[i].state ) invObject.setAttributeNS(null, "online", "");
                     
                     if(data[i].active == 1) $(invObject).find(".screen").attr("fill", "paleturquoise");
@@ -181,7 +181,7 @@
 
             function isOnline(e){
                 $.ajax({
-                    url: "arp?address="+e.getAttribute("mac")
+                    url: "arp?address="+e.getAttribute("address")
                 }).done(function(data){
                     if(data==1){
                         e.setAttribute("online", "");
