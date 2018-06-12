@@ -5,8 +5,8 @@
     </head>
     <body>
         <h1>выбор кабинета</h1>
-        <a href="?room=308а">308а</a>
-        <a href="?room=116a">116a</a>
-        <a href="?room=304">304</a>
+        @foreach (DB::table('classrooms')->select('title')->pluck('title') as $roomNumber)
+            <a href="?room={{$roomNumber}}">{{ $roomNumber }}</a>
+        @endforeach
     </body>
 </html>

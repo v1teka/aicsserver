@@ -33,7 +33,6 @@
                     },
                     url: 'getmap?room='+num
                 }).done(function(data) {
-                        alert(data);
                         drawInv(data);
                         $("#shutdownroom").bind("click", function(event){shutDownRoom(); return false;});
                         checkOnline();
@@ -47,11 +46,12 @@
                     //invObject.setAttributeNS(null, "title", " комп");
                     invObject.setAttributeNS(null, "inv", data[i].number);
                     invObject.setAttributeNS(null, "id", 'object' + i);
-                    invObject.setAttributeNS(null, "ip", data[i].mac);
+                    invObject.setAttributeNS(null, "mac", data[i].mac);
+                    if( data[i].state ) invObject.setAttributeNS(null, "online", "");
                     
                     if(data[i].active == 1) $(invObject).find(".screen").attr("fill", "paleturquoise");
                     $(invObject).bind("click", function(event){showInfo(this)});
-                    if(data[i].type == 1) document.querySelector("#canvas2").appendChild(invObject);
+                    if(data[i].type_id == 1) document.querySelector("#canvas2").appendChild(invObject);
                     else document.querySelector("#canvas1").appendChild(invObject);
                 });
             }
@@ -160,9 +160,10 @@
                 });
             }
             
-            function showPrimaryInfo(elem){//исправить проверку онлайна
-                $("#manage p").text(elem.getAttribute("class")+ ' ' + elem.getAttribute("title") + ' (' + elem.getAttribute("inv") + ')');
-                if(elem.getAttribute('active')==1) $("#status").text("Онлайн");
+            function showPrimaryInfo(elem){
+                $("#manage p").text(elem.getAttribute("class")+ /*' ' + elem.getAttribute("title") + */' (' + elem.getAttribute("inv") + ')');
+
+                if(elem.getAttribute('online') != null) $("#status").text("Онлайн");
                 else  $("#status").text("Оффлайн");
             }
 
@@ -180,7 +181,7 @@
 
             function isOnline(e){
                 $.ajax({
-                    url: "arp?ip="+e.getAttribute("ip")
+                    url: "arp?address="+e.getAttribute("mac")
                 }).done(function(data){
                     if(data==1){
                         $(e).find(".screen").attr("fill", "paleturquoise");

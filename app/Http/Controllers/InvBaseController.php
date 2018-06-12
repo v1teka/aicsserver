@@ -71,16 +71,18 @@ class InvBaseController extends Controller
         }
     }
 
-    public function isOnline(Request $request){
-        
-    }
-
     public function arpScan(Request $request){
+        $mac_scan = shell_exec('getmac');
+        $mac_scan = explode("\n", $mac_scan);
+        foreach($mac_scan as $scan) {
+            if(substr_count($scan, $request['address'])>0)
+                return 1;
+        }
+
         $arp_scan = shell_exec('arp -a');
         $arp_scan = explode("\n", $arp_scan);
-        $result="";
         foreach($arp_scan as $scan) {
-            if($request['ip']=='127.0.0.1' || strpos($scan, $request['ip']))
+            if(substr_count($scan, $request['address'])>0)
                 return 1;
         }
         return 0;
