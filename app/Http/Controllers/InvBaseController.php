@@ -79,19 +79,39 @@ class InvBaseController extends Controller
         }
     }
 
+    private function ipMac(string $scan){
+        preg_match("([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})", $scan, $mac);
+        preg_match("(\d+\.\d+\.\d+\.\d+)", $scan, $ip);
+        DB::table('computers')
+            ->where('mac', $mac[0])
+            ->update(['ip' => $ip[0]]);
+        return 1;
+    }
+
     public function arpScan(Request $request){
         $mac_scan = shell_exec('getmac');
         $mac_scan = explode("\n", $mac_scan);
         foreach($mac_scan as $scan) {
-            if(substr_count($scan, $request['address'])>0)
+            if(substr_count($scan, $request['address'])>0){
+                preg_match("((?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2})", $scan, $mac);
+                DB::table('computers')
+                    ->where('mac', $mac[0])
+                    ->update(['ip' => '127.0.0.1']);
                 return 1;
+            } 
         }
 
         $arp_scan = shell_exec('arp -a');
         $arp_scan = explode("\n", $arp_scan);
         foreach($arp_scan as $scan) {
-            if(substr_count($scan, $request['address'])>0)
+            if(substr_count($scan, $request['address'])>0){
+                preg_match("((?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2})", $scan, $mac);
+                preg_match("(\d+\.\d+\.\d+\.\d+)", $scan, $ip);
+                DB::table('computers')
+                    ->where('mac', $mac[0])
+                    ->update(['ip' => $ip[0]]);
                 return 1;
+            }
         }
         return 0;
     }
