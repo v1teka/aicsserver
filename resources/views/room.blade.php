@@ -155,7 +155,7 @@
                     url: "direct?address="+elem.getAttribute("address")+"&t=1"
                 }).done(function(data) {
                     currentIP = elem.getAttribute("address");
-                    enableButtons();
+                    if(data!=0) enableButtons();
                     $("#info").text(data);
                 });
             }

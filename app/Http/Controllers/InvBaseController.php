@@ -55,12 +55,20 @@ class InvBaseController extends Controller
     }
 
     public function Info(Request $request){
-        $fp = fsockopen($request['address'], 9999); //получить ip по mac из базы
-        if($request['t']==4) fputs($fp, "4".$request['message']);
-        else fputs($fp, $request['t']);
-        $answer = stream_get_contents($fp);
-        fclose($fp);
-        return $answer;
+        $ip = DB::table('computers')
+            ->select('ip')
+            ->where('mac', $request['address'])
+            ->orWhere('ip', $request['address'])
+            ->pluck('ip')[0];
+        if($ip){
+            $fp = fsockopen($ip, 9999);
+            if($request['t']==4) fputs($fp, "4".$request['message']);
+            else fputs($fp, $request['t']);
+            $answer = stream_get_contents($fp);
+            fclose($fp);
+            return $answer;
+        }else return 0;
+        
     }
 
     public function Draw(Request $request){
