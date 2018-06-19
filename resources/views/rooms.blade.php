@@ -4,9 +4,9 @@
         <title>Карта</title>
     </head>
     <body>
-        <h1>выбор кабинета</h1>
+        <h1>Выбирите кабинет:</h1>
         @foreach (DB::table('classrooms')->select('title')->pluck('title') as $roomNumber)
-            <a href="?room={{$roomNumber}}">{{ $roomNumber }}</a>
+            <p style="font-size: 14pt; line-height: 0.3";><a href="?room={{$roomNumber}}">Кабинет №{{ $roomNumber }}</a></p>
         @endforeach
     </body>
 </html>

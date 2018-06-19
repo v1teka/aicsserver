@@ -49,7 +49,7 @@
                     invObject.setAttributeNS(null, "address", data[i].mac);
                     if( data[i].state ) invObject.setAttributeNS(null, "online", "");
                     
-                    if(data[i].active == 1) $(invObject).find(".screen").attr("fill", "paleturquoise");
+                    if(data[i].state == 1) $(invObject).find(".screen").attr("fill", "paleturquoise");
                     $(invObject).bind("click", function(event){showInfo(this)});
                     if(data[i].type_id == 1) document.querySelector("#canvas2").appendChild(invObject);
                     else document.querySelector("#canvas1").appendChild(invObject);
@@ -184,7 +184,7 @@
                     url: "arp?address="+e.getAttribute("address")
                 }).done(function(data){
                     if(data==1){
-                        e.setAttribute("online", "");
+                        e.setAttribute("online", "1");
                         $(e).find(".screen").attr("fill", "paleturquoise");
                         return true;
                      }else{
@@ -243,10 +243,10 @@
         </script>
     </head>
     <body>
-        <h1>отрисовка кабинета {{$number}}</h1>
+        <h1>Карта кабинета №{{$number}}</h1>
         <div>
-            <a href="map">выбрать кабинет</a>
-            <a id="shutdownroom" href="#">отключить все</a>
+            <p style="font-size: 16pt; line-height: 0.3;"><a href="map">Вернуться к списку кабинетов</a></p>
+            <p style="font-size: 16pt; line-height: 0.3;"><a id="shutdownroom" href="#">Отключить все компьютеры</a></p>
         </div>
         <svg style="position:absolute;" width="1000px" height="1000px" id="canvas1" />
         <svg style="position:absolute;" width="1000px" height="1000px" id="canvas2" />
